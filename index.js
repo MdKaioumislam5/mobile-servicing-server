@@ -22,6 +22,8 @@ app.get('/', (req, res) => {
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 client.connect(err => {
     const servicesCollection = client.db("mobileService").collection("services");
+    const adminPanelCollection = client.db("mobileService").collection("adminPanel");
+    const reviewCollection = client.db("mobileService").collection("review");
     // perform actions on the collection object
     app.post('/addServices', (req, res) => {
         const services = req.body;
@@ -41,6 +43,52 @@ client.connect(err => {
                 // console.log('from database', review);
             })
     })
+
+
+    app.post('/addReview', (req, res) => {
+        const review = req.body;
+        // console.log(review);
+        reviewCollection.insertOne(review)
+            .then(result => {
+                console.log(result)
+                res.send(result.insertedCount > 0);
+            })
+    })
+    app.get('/getReview', (req, res) => {
+        reviewCollection.find()
+            .toArray((err, review) => {
+                res.send(review)
+                // console.log('from database', review);
+            })
+    })
+
+
+
+
+
+
+
+
+
+    app.post('/addAdminPanel', (req, res) => {
+        const adminPanel = req.body;
+        console.log(adminPanel);
+        adminPanelCollection.insertOne(adminPanel)
+            .then(result => {
+                console.log(result)
+                res.send(result.insertedCount > 0);
+            })
+    })
+    app.get('/getAdminPanel', (req, res) => {
+        adminPanelCollection.find()
+            .toArray((err, review) => {
+                res.send(review)
+                // console.log('from database', review);
+            })
+    })
+
+
+
 });
 
 
