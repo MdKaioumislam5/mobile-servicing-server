@@ -24,7 +24,26 @@ client.connect(err => {
     const servicesCollection = client.db("mobileService").collection("services");
     const adminPanelCollection = client.db("mobileService").collection("adminPanel");
     const reviewCollection = client.db("mobileService").collection("review");
+    const bookedCollection = client.db("mobileService").collection("booked");
     // perform actions on the collection object
+    app.post('/addBookedAbc', (req, res) => {
+        const booked = req.body;
+        console.log(booked);
+        bookedCollection.insertOne(booked)
+            .then(result => {
+                console.log(result)
+                res.send(result.insertedCount > 0);
+            })
+    })
+    // app.get('/getBooked', (req, res) => {
+    //     bookedCollection.find()
+    //         .toArray((err, review) => {
+    //             res.send(review)
+    //             // console.log('from database', review);
+    //         })
+    // })
+
+
     app.post('/addServices', (req, res) => {
         const services = req.body;
         console.log(services);
