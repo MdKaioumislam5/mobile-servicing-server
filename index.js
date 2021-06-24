@@ -35,13 +35,13 @@ client.connect(err => {
                 res.send(result.insertedCount > 0);
             })
     })
-    // app.get('/getBooked', (req, res) => {
-    //     bookedCollection.find()
-    //         .toArray((err, review) => {
-    //             res.send(review)
-    //             // console.log('from database', review);
-    //         })
-    // })
+    app.get('/getBookedAbc', (req, res) => {
+        bookedCollection.find()
+            .toArray((err, review) => {
+                res.send(review)
+                // console.log('from database', review);
+            })
+    })
 
 
     app.post('/addServices', (req, res) => {
